@@ -35,7 +35,7 @@ $(function() {
             var len = allFeeds.length;
             for (var i = 0; i < len; i++){
                 expect(allFeeds[i].url).toBeDefined();
-                expect(allFeeds[i].url).not.toBe('');
+                expect(allFeeds[i].url.length).not.toBe(0);
             }
         });
 
@@ -61,7 +61,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it("should be hidden by default", function() {
-            expect($('body').hasClass('menu-hidden')).toBeTruthy();
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
         });
 
          /* TODO: Write a test that ensures the menu changes
@@ -69,12 +69,12 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
-        it("should reveal itself when clicked", function() {
-            expect($('body').hasClass('menu-hidden')).toBeTruthy();
+        it("should open or close (show or hide) when clicked", function() {
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
             $('.menu-icon-link').click();
-            expect($('body').hasClass('menu-hidden')).not.toBeTruthy();
+            expect($('body').hasClass('menu-hidden')).not.toEqual(true);
             $('.menu-icon-link').click();
-            expect($('body').hasClass('menu-hidden')).toBeTruthy();
+            expect($('body').hasClass('menu-hidden')).toEqual(true);
         });
     });
 
@@ -88,13 +88,13 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function(done) {
-            $(".feed").empty
+            $(".feed").empty();
             loadFeed(1, function() {
                 done();
             });
         });
 
-        it("should load > 1 .entry element in feed container after loadFeed()", function() {
+        it("should load > 0 .entry element in feed container after loadFeed()", function() {
             var entries = $('.feed').find('.entry');
             var entryLen = entries.length;
             expect(entryLen).toBeGreaterThan(0);
@@ -109,6 +109,7 @@ $(function() {
          */
         var first;
         beforeEach(function(done) {
+            $(".feed").empty();
             first = $('.feed').html();
             loadFeed(2, function() {
                 done();
